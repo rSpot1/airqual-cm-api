@@ -25,10 +25,15 @@ try:
     le_region      = joblib.load(os.path.join(MODELS_DIR, 'label_encoder_region.joblib'))
     with open(os.path.join(MODELS_DIR, 'features.json'))      as f: FEATURES      = json.load(f)
     with open(os.path.join(MODELS_DIR, 'global_stats.json'))  as f: GLOBAL_STATS  = json.load(f)
-    with open(os.path.join(MODELS_DIR, 'city_enc_map.json'))  as f: CITY_ENC_MAP  = json.load(f)
+    
     import pandas as pd
     CITY_PROFILES = pd.read_csv(os.path.join(MODELS_DIR, 'city_profiles.csv'))
     RISK_TABLE    = pd.read_csv(os.path.join(MODELS_DIR, 'risk_table.csv'))
+
+    CITY_ENC_MAP = {
+        name: i
+        for i, name in enumerate(sorted(CITY_PROFILES['city'].tolist()))
+    }
     print(f"✓ Modèle RF chargé  ({len(FEATURES)} features)")
     print(f"✓ {len(CITY_PROFILES)} profils de villes chargés")
     MODEL_LOADED = True
